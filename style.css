@@ -47,4 +47,28 @@
         left: 0;
         background-color: rgba(0, 0, 0, 0.6);
     }
+    .searchConteiner{
+        width: 80%;
+        height: 200px;
+        background-color: #ed1d23;
+        margin: 30px;
+    }
+    .tittleSearch{
+        font-size: 1.5em;
+        font-weight: bold;
+        font-family: 'Roboto', sans-serif;
+        color: #151515;
+        margin-bottom: 20px;
+    }
+    .inputSearch{
+        margin-bottom: 20px;
+    }
+    .buttonSearch{
+        background-color: #151515;
+        color: #fff;
+        margin: 20px;
+        padding: 10px;
+        display: inline-block;
+        justify-content: flex-end;
+        }
 }
