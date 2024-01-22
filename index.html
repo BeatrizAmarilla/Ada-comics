@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/723ab17663.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
@@ -13,5 +14,51 @@
         </div>
     </header>
     <div class="hero"></div>
+    <main>
+        <div class="searchConteiner">
+            <h2 class="tittleSearch">Búsqueda</h2>
+            <div>
+                <div>
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Ingresá tu búsqueda" class="inputSearch">  
+                </div>
+                <div>
+                    <div>
+                        <label for="">Tipo</label>
+                        <select name="" id="">
+                            <option value="">COMICS</option>
+                            <option value="">PERSONAJES</option>
+                        </select>
+                        <label for="">ORDEN</label>
+                        <select name="" id="">
+                           <option value="">A-Z</option>
+                           <option value="">Z-A</option>
+                           <option value="">Más nuevos</option>
+                           <option value="">Más viejos</option>
+                        </select>
+                    </div>
+                    <button type="button" class="buttonSearch">BUSCAR</button>
+                </div>
+            </div>
+        </div>
+        <div>
+            <section><p>aca va nueva perstaña</p></section>
+            <section>
+                <h2>Resultados</h2>
+                <p><span>58860</span> Resultados
+                </p>
+                <div></div>
+                <div>
+                    <button type="button" aria-label="Página previa"><i class="fas fa-angle-double-left" aria-hidden="true"></i></button>
+                    <button type="button" aria-label="Página Anterior"><i class="fas fa-angle-left" aria-hidden="true"></i></button>
+                    <button type="button" aria-label="Siguiente Página"><i class="fas fa-angle-right" aria-hidden="true"></i></button>
+                    <button type="button" aria-label="Ultima Página"><i class="fas fa-angle-double-right" aria-hidden="true"></i></button>
+                </div>
+            </section>
+            <div>
+                <div></div>
+            </div>
+        </div>
+    </main>
 </body>
 </html>
