@@ -71,4 +71,20 @@
         display: inline-block;
         justify-content: flex-end;
         }
+    
+        .footer{
+            background-color: #151515;
+            color: #fff;
+           
+            
+        }
+
+        .footertittle{
+            display: inline-block;
+            align-items: center;
+        }
+
+
+
+
 }
