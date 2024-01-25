@@ -84,7 +84,10 @@
             align-items: center;
         }
 
-
+        .column{
+            display: grid;
+            grid-template-columns: 200px 200px 200px 200px 200px;
+        }
 
 
 }
