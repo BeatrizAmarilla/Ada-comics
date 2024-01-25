@@ -89,5 +89,7 @@
             grid-template-columns: 200px 200px 200px 200px 200px;
         }
 
-
+        .oculto-comics{
+            visibility: hidden;
+        }
 }
