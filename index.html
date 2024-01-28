@@ -24,20 +24,20 @@
                 </div>
                 <div>
                     <div>
-                        <label for="">TIPO</label>
-                        <select name="" id="">
-                            <option value="" class="selectComics">COMICS</option>
+                        <label for="selectTipo">TIPO</label>
+                        <select name="selectTipo" id="select">
+                            <option value="COMICS" class="selectComics">COMICS</option>
                             <option value="PERSONAJES" class="selectCharacters">PERSONAJES</option>
                         </select>
-                        <label for="">ORDEN</label>
-                        <select name="" id="">
-                           <option value="">A-Z</option>
-                           <option value="">Z-A</option>
-                           <option value="">Más nuevos</option>
-                           <option value="">Más viejos</option>
+                        <label for="selectOrden">ORDEN</label>
+                        <select name="selectOrden" id="selectOrden">
+                           <option value="AZ">A-Z</option>
+                           <option value="ZA">Z-A</option>
+                           <option value="NUEVOS">Más nuevos</option>
+                           <option value="VIEJOS">Más viejos</option>
                         </select>
                     </div>
-                    <button type="button" class="button-search buttonSearch">BUSCAR</button>
+                    <button type="button" class="button-search buttonSearch" id="buttonSearch">BUSCAR</button>
                 </div>
             </div>
         </div>
@@ -46,6 +46,7 @@
                 <div class="totalResults"></div>
                 <div class="comics-cards column oculto-comics"></div>
                 <div class="characters-cards column ocultoCharacters"></div>
+                <div class="" id="characters-cards-only"></div>
                 <div>
                     <button type="button" aria-label="Página previa"><i class="fas fa-angle-double-left" aria-hidden="true"></i></button>
                     <button type="button" aria-label="Página Anterior"><i class="fas fa-angle-left" aria-hidden="true"></i></button>

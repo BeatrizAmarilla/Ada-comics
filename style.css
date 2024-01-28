@@ -91,10 +91,10 @@
         }
 
         .ocultoComics{
-            visibility: hidden;
+            display: none;
         }  
         .ocultoCharacters{
-            visibility: hidden;
+            display: none;
         } 
         
 }
