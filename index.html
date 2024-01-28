@@ -26,8 +26,8 @@
                     <div>
                         <label for="">TIPO</label>
                         <select name="" id="">
-                            <option value="">COMICS</option>
-                            <option value="">PERSONAJES</option>
+                            <option value="" class="selectComics">COMICS</option>
+                            <option value="PERSONAJES" class="selectCharacters">PERSONAJES</option>
                         </select>
                         <label for="">ORDEN</label>
                         <select name="" id="">
@@ -42,26 +42,16 @@
             </div>
         </div>
         <div>
-            <div>
-                <h2>Resultados</h2>
-                <p><span>58860</span> Resultados
-                </p>
-                <div></div>
-            </div>
-            <section>
+                <p>Resultados</p>
+                <div class="totalResults"></div>
                 <div class="comics-cards column oculto-comics"></div>
-            </section>
-            <section>
-                <div class="characters-cards column oculto-characters"></div>
-            </section>
-            <section>
+                <div class="characters-cards column ocultoCharacters"></div>
                 <div>
                     <button type="button" aria-label="Página previa"><i class="fas fa-angle-double-left" aria-hidden="true"></i></button>
                     <button type="button" aria-label="Página Anterior"><i class="fas fa-angle-left" aria-hidden="true"></i></button>
                     <button type="button" aria-label="Siguiente Página"><i class="fas fa-angle-right" aria-hidden="true"></i></button>
                     <button type="button" aria-label="Ultima Página"><i class="fas fa-angle-double-right" aria-hidden="true"></i></button>
                 </div>
-            </section>
         </div>
     </main>
     <footer class="footer">

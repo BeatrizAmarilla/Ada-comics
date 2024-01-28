@@ -87,9 +87,25 @@
         .column{
             display: grid;
             grid-template-columns: 200px 200px 200px 200px 200px;
+      
         }
 
-        .oculto-comics{
+        .ocultoComics{
             visibility: hidden;
-        }
+        }  
+        .ocultoCharacters{
+            visibility: hidden;
+        } 
+        
+}
+
+@media screen and (min-width: 768px) {
+    .tittleSearch{
+        font-size: 1.7em;
+        font-weight:bolder;
+        font-family: 'Roboto', sans-serif;
+        color: #151515;
+        margin-bottom: 20px;
+    }
+
 }
