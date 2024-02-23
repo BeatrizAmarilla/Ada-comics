@@ -250,42 +250,30 @@ const renderComicDetails = (detailsComic) => {
   const comicCardsOnly = document.getElementById("comicCardsOnly");
   if (comicCardsOnly) {
     const rawDate = new Date(detailsComic.dates[0].date);
-    const formattedDate = `${rawDate.getDate()}/${rawDate.getMonth() + 1
-      }/${rawDate.getFullYear()}`;
+    const formattedDate = `${rawDate.getDate()}/${
+      rawDate.getMonth() + 1
+    }/${rawDate.getFullYear()}`;
     comicCardsOnly.innerHTML = `
       <div>
-        <div style="columns: 2;margin:20px">
-
-
-<div class="detail-comic">
-
-
-        <div class="img-container">
-          <img class="img" src="${detailsComic.thumbnail.path}/portrait_xlarge.${detailsComic.thumbnail.extension}" alt="${detailsComic.title}">
-
+          <div class="detail-comic"style="columns: 2;margin-left:20px,gap:2">
+              <div class="img-container">
+                <img class="img" src="${detailsComic.thumbnail.path}/portrait_xlarge.${detailsComic.thumbnail.extension}" alt="${detailsComic.title}">
+              </div>  
+              <div>
+                <p style="font-size:2rem;margin-bottom:10px">${detailsComic.title}</p>
+                <p style="margin-bottom:10px">Publicado</p>
+                <p style="margin-bottom:10px">${formattedDate}</p>
+                <p style="margin-bottom:10px">Guionistas</p>
+                <p style="margin-bottom:10px">${detailsComic.creators.items[0].name}</p>
+                <p style="margin-bottom:10px">Descripción</p>
+                <p>${detailsComic.description}</p>
+              </div>
           </div>
-
-<div>
-<p style="font-size:2rem;margin-bottom:10px">${detailsComic.title}</p>
-<p style="margin-bottom:10px">Publicado</p>
-<p style="margin-bottom:10px">${formattedDate}</p>
-<p style="margin-bottom:10px">Guionistas</p>
-<p style="margin-bottom:10px">${detailsComic.creators.items[0].name}</p>
-<p style="margin-bottom:10px">Descripción</p>
-<p>${detailsComic.description}</p>
-</div>
-        </div>
-
-
-        </div>
-
-
-
-        <div style="margin:20px">
-          <h3 >Personajes</h3>
-          <p>${detailsComic.characters.items.length} resultados</p>
-        </div> 
-        <div id="characterList"></div>
+          <div style="margin:20px">
+            <h3 >Personajes</h3>
+            <p>${detailsComic.characters.items.length} resultados</p>
+          </div> 
+          <div id="characterList"></div>
       </div>`;
 
     // Obtener nombres de personajes y renderizarlos

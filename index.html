@@ -1,71 +1,113 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://kit.fontawesome.com/723ab17663.js" crossorigin="anonymous"></script>
-</head>
-<body>
+    <link rel="stylesheet" href="style.css" />
+    <script
+      src="https://kit.fontawesome.com/723ab17663.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
     <div id="loader-container" class="loader-container">
-        <div id="loader" class="loader"></div>
+      <div id="loader" class="loader"></div>
     </div>
     <header>
-        <div class="tittleConteiner">
-            <h1 class="tittle">ADA COMICS</h1>
-        </div>
+      <div class="tittleConteiner">
+        <h1 class="tittle">ADA COMICS</h1>
+      </div>
     </header>
     <div class="hero"></div>
     <main class="main">
-        <div class="searchConteiner">
-            <h2 class="tittleSearch">Búsqueda</h2>
-            <div>
-                <div>
-                    <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Ingresá tu búsqueda" class="input-text inputSearch">  
-                </div>
-                <div>
-                    <div>
-                        <label for="selectTipo">TIPO</label>
-                        <select name="selectTipo" id="select">
-                            <option value="COMICS" class="selectComics">COMICS</option>
-                            <option value="PERSONAJES" class="selectCharacters">PERSONAJES</option>
-                        </select>
-                        <label for="selectOrden">ORDEN</label>
-                        <select name="selectOrden" id="selectOrden">
-                           <option value="AZ">A-Z</option>
-                           <option value="ZA">Z-A</option>
-                           <option value="NUEVOS">Más nuevos</option>
-                           <option value="VIEJOS">Más viejos</option>
-                        </select>
-                    </div>
-                    <button type="button" class="button-search buttonSearch" id="buttonSearch">BUSCAR</button>
-                </div>
-            </div>
-        </div>
+      <div class="searchConteiner">
+        <h2 class="tittleSearch">Búsqueda</h2>
         <div>
-                <h3 class="resultTittle">Resultados</h3>
-                <div class="totalResults"></div>
-                <div class="comics-cards column oculto-comics"></div>
-                <div class="characters-cards column ocultoCharacters"></div>
-                <div class="oculto-comics" id="comicCardsOnly"></div>
-                <div class="oculto-comics" id="charactersCardOnly"></div>
-                <div class="pagination">
-                    <button type="button" aria-label="Página previa" class="buttonPage" id="paginaPrevia"><i class="fas fa-angle-double-left" aria-hidden="true"></i></button>
-                    <button type="button" aria-label="Página Anterior" class="buttonPage" id="paginaAnterior"><i class="fas fa-angle-left" aria-hidden="true"></i></button>
-                    <button type="button" aria-label="Siguiente Página" class="buttonPage" id="siguientePagina"><i class="fas fa-angle-right" aria-hidden="true"></i></button>
-                    <button type="button" aria-label="Ultima Página" class="buttonPage" id="ultimaPagina"><i class="fas fa-angle-double-right" aria-hidden="true"></i></button>
-                </div>
+          <div>
+            <i class="fas fa-search"></i>
+            <input
+              type="text"
+              placeholder="Ingresá tu búsqueda"
+              class="input-text inputSearch"
+            />
+          </div>
+          <div>
+            <div>
+              <label for="selectTipo">TIPO</label>
+              <select name="selectTipo" class="selectTipo" id="select">
+                <option value="COMICS" class="selectComics">COMICS</option>
+                <option value="PERSONAJES" class="selectCharacters">
+                  PERSONAJES
+                </option>
+              </select>
+              <label for="selectOrden">ORDEN</label>
+              <select name="selectOrden" class="selectOrden" id="selectOrden">
+                <option value="AZ">A-Z</option>
+                <option value="ZA">Z-A</option>
+                <option value="NUEVOS">Más nuevos</option>
+                <option value="VIEJOS">Más viejos</option>
+              </select>
+            </div>
+            <div class="button">
+              <button
+                type="button"
+                class="button-search buttonSearch"
+                id="buttonSearch"
+              >
+                BUSCAR
+              </button>
+            </div>
+          </div>
         </div>
+      </div>
+      <div>
+        <h3 class="resultTittle">Resultados</h3>
+        <div class="totalResults"></div>
+        <div class="comics-cards column oculto-comics"></div>
+        <div class="characters-cards column ocultoCharacters"></div>
+        <div class="oculto-comics" id="comicCardsOnly"></div>
+        <div class="oculto-comics" id="charactersCardOnly"></div>
+        <div class="pagination">
+          <button
+            type="button"
+            aria-label="Página previa"
+            class="buttonPage"
+            id="paginaPrevia"
+          >
+            <i class="fas fa-angle-double-left" aria-hidden="true"></i>
+          </button>
+          <button
+            type="button"
+            aria-label="Página Anterior"
+            class="buttonPage"
+            id="paginaAnterior"
+          >
+            <i class="fas fa-angle-left" aria-hidden="true"></i>
+          </button>
+          <button
+            type="button"
+            aria-label="Siguiente Página"
+            class="buttonPage"
+            id="siguientePagina"
+          >
+            <i class="fas fa-angle-right" aria-hidden="true"></i>
+          </button>
+          <button
+            type="button"
+            aria-label="Ultima Página"
+            class="buttonPage"
+            id="ultimaPagina"
+          >
+            <i class="fas fa-angle-double-right" aria-hidden="true"></i>
+          </button>
+        </div>
+      </div>
     </main>
-   
+
     <footer class="footer">
-        <div class="footertittle">Hecho con ❤️ por Beatriz</div>
+      <div class="footertittle">Hecho con ❤️ por Beatriz</div>
     </footer>
     <script src="./app.js"></script>
-</body>
+  </body>
 </html>
-
-
-

@@ -108,15 +108,20 @@ main {
   }
   .inputSearch {
     margin-bottom: 20px;
+    width: 90%;
+  }
+  .button {
+    display: flex;
+    justify-content: flex-end;
   }
   .buttonSearch {
     background-color: #151515;
     color: #fff;
-    margin: 20px;
-    padding: 10px;
-    display: inline-block;
-    justify-content: flex-end;
+    width: 40%;
+    margin: 5% 0;
+    padding: 2%;
   }
+
   .totalResults {
     margin-left: 20px;
   }
@@ -162,6 +167,12 @@ main {
   }
   .ocultoCharacters {
     display: none;
+  }
+  .selectTipo {
+    width: 30%;
+  }
+  .selectOrden {
+    width: 20%;
   }
 }
 
@@ -237,5 +248,9 @@ main {
     width: 100%;
     height: 100%;
     display: block;
+  }
+  .loader {
+    top: 50%;
+    left: 45%;
   }
 }
