@@ -1,4 +1,4 @@
-const urlBase = "http://gateway.marvel.com/v1/public/";
+const urlBase = "https://gateway.marvel.com/v1/public/";
 let ts = "ts=1";
 const publicKey = "&apikey=93c0e369ba23b10fe80edb027c368e12";
 const hash = "&hash=31c8321bf2c8dca37913226c7e83701d";
