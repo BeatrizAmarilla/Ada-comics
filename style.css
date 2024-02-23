@@ -8,6 +8,10 @@
   text-decoration: none;
   list-style: none;
 }
+main {
+  width: 90%;
+  margin: 0 auto;
+}
 
 @media screen and (min-width: 320px) {
   .loader-container {
@@ -36,15 +40,22 @@
   }
 
   @-webkit-keyframes spin {
-    0% { -webkit-transform: rotate(0deg); }
-    100% { -webkit-transform: rotate(360deg); }
+    0% {
+      -webkit-transform: rotate(0deg);
+    }
+    100% {
+      -webkit-transform: rotate(360deg);
+    }
   }
 
   @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(360deg);
+    }
   }
-
 
   .tittleConteiner {
     width: 100%;
@@ -81,10 +92,12 @@
     background-color: rgba(0, 0, 0, 0.6);
   }
   .searchConteiner {
-    width: 80%;
-    height: 200px;
+    width: 100%;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
     background-color: #ed1d23;
-    margin: 30px;
   }
   .tittleSearch {
     font-size: 1.5em;
@@ -135,15 +148,13 @@
   }
   .column {
     display: grid;
-    grid-template-columns: 1fr; 
+    grid-template-columns: 1fr;
     text-align: center;
     padding-top: 20px;
-    
   }
 
   .comics-cards {
     margin: 0 auto;
-     
   }
 
   .ocultoComics {
@@ -154,10 +165,25 @@
   }
 }
 
-@media screen and (min-width: 768px) {
-
+@media (min-width: 768px) and (max-width: 1023px) {
+  main {
+    width: 90%;
+    margin: 0 auto;
+  }
+  .searchConteiner {
+    width: 100%;
+    margin: 0;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 10px;
+  }
   .loader {
     left: 40%;
+  }
+  .column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    text-align: center;
   }
 
   .tittleSearch {
@@ -167,14 +193,6 @@
     color: #151515;
     margin-bottom: 20px;
   }
-  .column {
-    display: grid;
-    grid-template-columns: 200px 200px 200px 200px;
-    text-align: center;
-  
-    
-    
-  }
 
   .ocultoComics {
     display: none;
@@ -182,8 +200,6 @@
   .ocultoCharacters {
     display: none;
   }
-
-
 }
 
 @media screen and (min-width: 1024px) {
@@ -198,7 +214,6 @@
     display: grid;
     grid-template-columns: 200px 200px 200px 200px 200px;
     justify-content: center;
-  
   }
 
   .ocultoComics {
@@ -206,5 +221,21 @@
   }
   .ocultoCharacters {
     display: none;
+  }
+
+  .detail-comic {
+    display: flex;
+    width: 100%;
+    gap: 30px;
+  }
+
+  .img-container {
+    width: 400px;
+    height: auto;
+  }
+  .img {
+    width: 100%;
+    height: 100%;
+    display: block;
   }
 }
