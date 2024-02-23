@@ -99,7 +99,14 @@
         
 }
 
-@media screen and (min-width: 768px) {
+@media (min-width:768px) and (max-width:1023px) {
+  .main{
+    width: 90%;
+    margin: 0 auto;
+  }
+  .column{
+    grid-template-columns: repeat(3,200px);
+  }
     .tittleSearch{
         font-size: 1.7em;
         font-weight:bolder;
