@@ -85,6 +85,7 @@ const printComics = async (title, order, offset) => {
   }
   ocultarLoader();
   updatePaginationButtons();
+  
 };
 printComics(title, order, offset);
 // Función para actualizar los botones de paginación
@@ -220,8 +221,10 @@ const renderComicDetails = (detailsComic) => {
             </div>`;
         }
       });
+   
     });
   }
+
 };
 
 const getCharacterDetails = async (characterName) => {
@@ -230,6 +233,57 @@ const getCharacterDetails = async (characterName) => {
   const data = await response.json();
   return data.data.results[0];
 };
+
+
+// personajes
+// Variables
+let name = "";
+ //data de personajes
+const getMarvelCharacters = async (name) => {
+  mostrarLoader();
+  let existName = name ? `&nameStartsWith=${name}` : "";
+  const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return {
+    characters: data.data.results,
+    totalCharacters: data.data.total,
+  };
+};
+
+//impresion de personajes en pantalla
+
+const printCharacters = async (name, order) => {
+  const { characters, totalCharacters } = await getMarvelCharacters(name);
+  if (order) {
+    characters.sort((a, b) => {
+      const aValue = a.name || "";
+      const bValue = b.name || "";
+
+      if (order === "AZ") {
+        return aValue.localeCompare(bValue);
+      } else if (order === "ZA") {
+        return bValue.localeCompare(aValue);
+      }
+    });
+  }
+  $(".characters-cards").innerHTML = ``;
+  $(".totalResults").innerHTML = `${totalCharacters}`;
+
+  for (let character of characters) {
+    $(".characters-cards").innerHTML += `
+    <div onclick="handleCharacterClick(${character.id})">
+                <img src="${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}" alt="${character.name}">
+                <p>${character.name}</p>
+            </div>`;
+  }
+  ocultarLoader();
+};
+
+printCharacters();
+
+
+
 
 //card descripcion characters
 
@@ -297,52 +351,6 @@ const renderCharacterComics = (comics) => {
   }
 };
 
-// personajes
-// Variables
-let name = "";
- //data de personajes
-const getMarvelCharacters = async (name) => {
-  mostrarLoader();
-  let existName = name ? `&nameStartsWith=${name}` : "";
-  const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return {
-    characters: data.data.results,
-    totalCharacters: data.data.total,
-  };
-};
-
-//impresion de personajes en pantalla
-
-const printCharacters = async (name, order) => {
-  const { characters, totalCharacters } = await getMarvelCharacters(name);
-  if (order) {
-    characters.sort((a, b) => {
-      const aValue = a.name || "";
-      const bValue = b.name || "";
-
-      if (order === "AZ") {
-        return aValue.localeCompare(bValue);
-      } else if (order === "ZA") {
-        return bValue.localeCompare(aValue);
-      }
-    });
-  }
-  $(".characters-cards").innerHTML = ``;
-  $(".totalResults").innerHTML = `${totalCharacters}`;
-
-  for (let character of characters) {
-    $(".characters-cards").innerHTML += `
-    <div onclick="handleCharacterClick(${character.id})">
-                <img src="${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}" alt="${character.name}">
-                <p>${character.name}</p>
-            </div>`;
-  }
-  ocultarLoader();
-};
-
-printCharacters();
 
 
 
