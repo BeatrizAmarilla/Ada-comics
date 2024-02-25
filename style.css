@@ -104,6 +104,8 @@ main {
     font-family: "Roboto", sans-serif;
     color: #151515;
     margin-bottom: 20px;
+    margin-top: 20px;
+    margin-left: 14px;
   }
   .inputSearch {
     margin-bottom: 20px;
@@ -210,6 +212,12 @@ main {
   .ocultoCharacters {
     display: none;
   }
+  .buttonSearch {
+    width: 15%;
+    padding: 1%;
+    margin: 0 10% 0 0;
+  }
+
 }
 
 @media screen and (min-width: 1024px) {
@@ -252,4 +260,19 @@ main {
     top: 50%;
     left: 45%;
   }
+  .selectTipo {
+    width: 15%;
+  }
+  .selectOrden {
+    width: 12%;
+  }
+  .buttonSearch {
+    width: 10%;
+    padding: 1%;
+    margin: 0 10% 0 0;
+  }
+  .inputSearch {
+    width: 88%;
+  }
+
 }
