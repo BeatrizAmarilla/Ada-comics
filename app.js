@@ -87,6 +87,8 @@ const printComics = async (title, order, offset) => {
   updatePaginationButtons();
 };
 printComics(title, order, offset);
+
+
 // Función para actualizar los botones de paginación
 const updatePaginationButtons = () => {
   const currentPage = offset / limit + 1;
@@ -208,20 +210,7 @@ const renderComicDetails = (detailsComic) => {
           <div id="characterList"></div>
       </div>`;
 
-    // // Obtener nombres de personajes y renderizarlos
-    // const characterList = document.getElementById("characterList");
-    // detailsComic.characters.items.forEach((character) => {
-    //   getCharacterDetails(character.name).then((characterDetails) => {
-    //     if (characterDetails) {
-    //       characterList.innerHTML += `
-    //         <div class="comic" style="display: inline-block;margin-left:20px">
-    //         <img src="${characterDetails.thumbnail.path}/portrait_xlarge.${characterDetails.thumbnail.extension}" alt="${characterDetails.title}">
-    //         <p style="font-size: 12px; word-wrap: break-word;">${characterDetails.name}</p>
-    //         </div>`;
-    //     }
-    //   });
 
-    // });
     // Obtener nombres de personajes y renderizarlos
     const characterList = document.getElementById("characterList");
     detailsComic.characters.items.forEach((character) => {
@@ -266,11 +255,14 @@ const getCharacterDetails = async (characterName) => {
 // personajes
 // Variables
 let name = "";
+let currentPage = 1;
+const charactersPerPage = 20; 
+
 //data de personajes
-const getMarvelCharacters = async (name) => {
+const getMarvelCharacters = async (name,offset) => {
   mostrarLoader();
   let existName = name ? `&nameStartsWith=${name}` : "";
-  const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}`;
+  const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}&limit=${charactersPerPage}&offset=${offset}`;
   const response = await fetch(url);
   const data = await response.json();
   return {
@@ -279,10 +271,9 @@ const getMarvelCharacters = async (name) => {
   };
 };
 
-//impresion de personajes en pantalla
-
-const printCharacters = async (name, order) => {
-  const { characters, totalCharacters } = await getMarvelCharacters(name);
+const printCharacters = async (name, order, page) => {
+  const offset = (page - 1) * charactersPerPage;
+  const { characters, totalCharacters } = await getMarvelCharacters(name, offset);
   if (order) {
     characters.sort((a, b) => {
       const aValue = a.name || "";
@@ -306,9 +297,52 @@ const printCharacters = async (name, order) => {
             </div>`;
   }
   ocultarLoader();
+  return totalCharacters; 
 };
 
-printCharacters();
+printCharacters("", "", currentPage);
+
+
+
+// Función para mostrar la primera página
+const showFirstPage = () => {
+  currentPage = 1;
+  printCharacters("", "", currentPage);
+};
+
+// Función para mostrar la página anterior
+const showPreviousPage = () => {
+  if (currentPage > 1) {
+    currentPage--;
+    printCharacters("", "", currentPage);
+  }
+};
+
+// Función para mostrar la siguiente página
+const showNextPage = async () => {
+  const totalCharacters = await printCharacters("", "", currentPage); 
+  const totalPages = Math.ceil(totalCharacters / charactersPerPage); 
+  if (currentPage < totalPages) {
+    currentPage++;
+    printCharacters("", "", currentPage);
+  }
+};
+
+
+// Función para mostrar la última página
+const showLastPage = async () => {
+  const totalCharacters = await printCharacters("", "", 1);
+  const totalPages = Math.ceil(totalCharacters / charactersPerPage); 
+  currentPage = totalPages; 
+  printCharacters("", "", currentPage);
+};
+
+// Agregar event listeners a los botones de paginación
+document.getElementById("paginaPrevia").addEventListener("click", showFirstPage);
+document.getElementById("paginaAnterior").addEventListener("click", showPreviousPage);
+document.getElementById("siguientePagina").addEventListener("click", showNextPage);
+document.getElementById("ultimaPagina").addEventListener("click", showLastPage);
+
 
 //card descripcion characters
 
@@ -342,57 +376,31 @@ const renderCharacterDetails = async (detailsCharacter) => {
         <div id="comicList"></div>
       </div>`;
 
-    // Limpiar el contenido previo antes de agregar el nuevo contenido
     charactersCardOnly.innerHTML = "";
     charactersCardOnly.classList.remove("ocultoComics");
     comicCardsOnly.classList.add("ocultoComics");
-    // Agregar el contenedor de detalles del personaje al elemento charactersCardOnly
     charactersCardOnly.appendChild(characterDetailsContainer);
 
-    // Obtener los cómics en los que aparece el personaje
     const comics = await getCharacterComics(detailsCharacter.id);
-
-    // Limpiar la lista de cómics antes de agregar los nuevos cómics
     const comicList = document.getElementById("comicList");
     comicList.innerHTML = "";
 
-    //renderCharacterComics(comics);
-    // // Agregar evento de clic a cada cómic
-    // comics.forEach((comic) => {
-    //   const comicDiv = document.createElement('div');
-    //   comicDiv.innerHTML = `
-    //     <div>
-    //       <img src="${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}" alt="${comic.title}">
-    //       <p>${comic.title}</p>
-    //     </div>`;
-    //   comicDiv.addEventListener('click', () => {
-    //     // Aquí puedes manejar la lógica para mostrar el detalle del cómic
-    //     console.log('Clic en el cómic:', comic);
-    //     // Llamar a una función para mostrar el detalle del cómic
-    //     renderComicDetails(comic);
-    //   });
-    //   comicList.appendChild(comicDiv);
-    // });
-
-    // Agregar evento de clic a cada cómic
+    // Agregar evento de click a cada cómic
     comics.forEach((comic) => {
       const comicDiv = document.createElement("div");
-      comicDiv.classList.add("comic"); // Agrega la clase 'comic' al div del cómic
+      comicDiv.classList.add("comic"); 
       comicDiv.innerHTML = `
     <div>
       <img src="${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}" alt="${comic.title}">
       <p>${comic.title}</p>
     </div>`;
 
-      // Aplicar estilos al div del cómic
-      comicDiv.style.flex = "1 0 200px"; // Cada cómic ocupa un tercio del espacio disponible, con un ancho máximo de 200px
+      comicDiv.style.flex = "1 0 200px";
       comicDiv.style.maxWidth = "200px";
       comicDiv.style.cursor = "pointer";
 
       comicDiv.addEventListener("click", () => {
-        // Aquí puedes manejar la lógica para mostrar el detalle del cómic
         console.log("Clic en el cómic:", comic);
-        // Llamar a una función para mostrar el detalle del cómic
         renderComicDetails(comic);
       });
       document.getElementById("comicList").appendChild(comicDiv);
