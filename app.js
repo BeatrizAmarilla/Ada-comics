@@ -28,7 +28,7 @@ mostrarLoader();
 //comics
 let title = "";
 let offset = 0;
-const limit = 20;
+let limit = 20;
 let order = "";
 let totalComics = 0;
 let totalPages = 0;
@@ -86,7 +86,7 @@ const printComics = async (title, order, offset) => {
   ocultarLoader();
   updatePaginationButtons();
 };
-
+printComics(title, order, offset);
 // Función para actualizar los botones de paginación
 const updatePaginationButtons = () => {
   const currentPage = offset / limit + 1;
@@ -127,25 +127,43 @@ document.getElementById("siguientePagina").addEventListener("click", () => {
 
 // Event listener para el botón de página previa
 $("#paginaPrevia").addEventListener("click", () => {
-  if (offset >= limit) {
-    offset -= limit;
-    printComics(title, order, offset);
-  }
-});
+  offset = 0; // Establecer offset a 0 para ir a la primera página
+  printComics(title, order, offset);
+})
 
+// // Event listener para el botón de última página
+// $("#ultimaPagina").addEventListener("click", () => {
+//   const totalPages = Math.ceil(totalComics / limit);
+//   const lastPageOffset = (totalPages - 1) * limit;
+//   printComics(title, order, lastPageOffset);
+// });
 // Event listener para el botón de última página
-$("#ultimaPagina").addEventListener("click", () => {
+$("#ultimaPagina").addEventListener("click", async () => {
   const totalPages = Math.ceil(totalComics / limit);
   const lastPageOffset = (totalPages - 1) * limit;
-  printComics(title, order, lastPageOffset);
+  await printComics(title, order, lastPageOffset);
+
+  // Habilitar los botones de página previa y página anterior
+  $("#paginaPrevia").disabled = false;
+  $("#paginaAnterior").disabled = false;
+
+// Deshabilitar el botón de última página si ya estamos en la última página
+if (offset >= lastPageOffset) {
+  console.log("Deshabilitando el botón de última página");
+  document.getElementById("ultimaPagina").disabled = true;
+}
+
+// Deshabilitar el botón de página siguiente si ya estamos en la última página
+if (offset + limit >= totalComics) {
+  console.log("Deshabilitando el botón de siguiente página");
+  document.getElementById("siguientePagina").disabled = true;
+}
 });
 
-printComics(title, order, offset);
-
 // personajes
+// Variables
 let name = "";
-
-//data de personajes
+ //data de personajes
 const getMarvelCharacters = async (name) => {
   mostrarLoader();
   let existName = name ? `&nameStartsWith=${name}` : "";
@@ -188,45 +206,6 @@ const printCharacters = async (name, order) => {
 };
 
 printCharacters();
-
-// Al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-  document.querySelector(".comics-cards").classList.remove("ocultoComics");
-  document.querySelector(".characters-cards").classList.add("ocultoCharacters");
-});
-
-//ocultar option
-selectElement.addEventListener("change", (e) => {
-  if (e.target.value === "PERSONAJES") {
-    selectOrden.querySelector('option[value="NUEVOS"]').style.display = "none";
-    selectOrden.querySelector('option[value="VIEJOS"]').style.display = "none";
-  } else {
-    selectOrden
-      .querySelectorAll("option")
-      .forEach((option) => (option.style.display = "block"));
-  }
-});
-
-//boton buscar
-buttonSearch.addEventListener("click", async (e) => {
-  e.preventDefault();
-  const selectedValue = selectElement.value;
-
-  if (selectedValue === "COMICS") {
-    comicsCards.classList.remove("ocultoComics");
-    charactersCards.classList.add("ocultoCharacters");
-    comicCardsOnly.classList.add("ocultoComics");
-    charactersCardOnly.classList.add("ocultoComics");
-    const selectedOrder = selectOrden.value;
-    await printComics(inputText.value, selectedOrder);
-  } else if (selectedValue === "PERSONAJES") {
-    comicsCards.classList.add("ocultoComics");
-    charactersCards.classList.remove("ocultoCharacters");
-    comicCardsOnly.classList.add("ocultoComics");
-    const selectedOrder = selectOrden.value;
-    await printCharacters(inputText.value, selectedOrder);
-  }
-});
 
 //card descripcion comics
 
@@ -364,3 +343,45 @@ const renderCharacterComics = (comics) => {
     comicList.innerHTML += `</div>`;
   }
 };
+
+
+// Al cargar la página
+document.addEventListener("DOMContentLoaded", () => {
+  document.querySelector(".comics-cards").classList.remove("ocultoComics");
+  document.querySelector(".characters-cards").classList.add("ocultoCharacters");
+});
+
+//ocultar option
+selectElement.addEventListener("change", (e) => {
+  if (e.target.value === "PERSONAJES") {
+    selectOrden.querySelector('option[value="NUEVOS"]').style.display = "none";
+    selectOrden.querySelector('option[value="VIEJOS"]').style.display = "none";
+  } else {
+    selectOrden
+      .querySelectorAll("option")
+      .forEach((option) => (option.style.display = "block"));
+  }
+});
+
+//boton buscar
+buttonSearch.addEventListener("click", async (e) => {
+  e.preventDefault();
+  const selectedValue = selectElement.value;
+
+  if (selectedValue === "COMICS") {
+    comicsCards.classList.remove("ocultoComics");
+    charactersCards.classList.add("ocultoCharacters");
+    comicCardsOnly.classList.add("ocultoComics");
+    charactersCardOnly.classList.add("ocultoComics");
+    const selectedOrder = selectOrden.value;
+    await printComics(inputText.value, selectedOrder);
+  } else if (selectedValue === "PERSONAJES") {
+    comicsCards.classList.add("ocultoComics");
+    charactersCards.classList.remove("ocultoCharacters");
+    comicCardsOnly.classList.add("ocultoComics");
+    charactersCardOnly.classList.add("ocultoComics");
+    const selectedOrder = selectOrden.value;
+    await printCharacters(inputText.value, selectedOrder);
+  }
+});
+
