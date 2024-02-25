@@ -12,6 +12,12 @@ main {
   width: 90%;
   margin: 0 auto;
 }
+/* Estilos generales */
+#comicList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px; /* Espacio entre cada cómic */
+}
 
 @media screen and (min-width: 320px) {
   .loader-container {
