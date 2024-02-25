@@ -129,7 +129,7 @@ document.getElementById("siguientePagina").addEventListener("click", () => {
 $("#paginaPrevia").addEventListener("click", () => {
   offset = 0; // Establecer offset a 0 para ir a la primera página
   printComics(title, order, offset);
-})
+});
 
 // // Event listener para el botón de última página
 // $("#ultimaPagina").addEventListener("click", () => {
@@ -147,65 +147,18 @@ $("#ultimaPagina").addEventListener("click", async () => {
   $("#paginaPrevia").disabled = false;
   $("#paginaAnterior").disabled = false;
 
-// Deshabilitar el botón de última página si ya estamos en la última página
-if (offset >= lastPageOffset) {
-  console.log("Deshabilitando el botón de última página");
-  document.getElementById("ultimaPagina").disabled = true;
-}
+  // Deshabilitar el botón de última página si ya estamos en la última página
+  if (offset >= lastPageOffset) {
+    console.log("Deshabilitando el botón de última página");
+    document.getElementById("ultimaPagina").disabled = true;
+  }
 
-// Deshabilitar el botón de página siguiente si ya estamos en la última página
-if (offset + limit >= totalComics) {
-  console.log("Deshabilitando el botón de siguiente página");
-  document.getElementById("siguientePagina").disabled = true;
-}
+  // Deshabilitar el botón de página siguiente si ya estamos en la última página
+  if (offset + limit >= totalComics) {
+    console.log("Deshabilitando el botón de siguiente página");
+    document.getElementById("siguientePagina").disabled = true;
+  }
 });
-
-// personajes
-// Variables
-let name = "";
- //data de personajes
-const getMarvelCharacters = async (name) => {
-  mostrarLoader();
-  let existName = name ? `&nameStartsWith=${name}` : "";
-  const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  return {
-    characters: data.data.results,
-    totalCharacters: data.data.total,
-  };
-};
-
-//impresion de personajes en pantalla
-
-const printCharacters = async (name, order) => {
-  const { characters, totalCharacters } = await getMarvelCharacters(name);
-  if (order) {
-    characters.sort((a, b) => {
-      const aValue = a.name || "";
-      const bValue = b.name || "";
-
-      if (order === "AZ") {
-        return aValue.localeCompare(bValue);
-      } else if (order === "ZA") {
-        return bValue.localeCompare(aValue);
-      }
-    });
-  }
-  $(".characters-cards").innerHTML = ``;
-  $(".totalResults").innerHTML = `${totalCharacters}`;
-
-  for (let character of characters) {
-    $(".characters-cards").innerHTML += `
-    <div onclick="handleCharacterClick(${character.id})">
-                <img src="${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}" alt="${character.name}">
-                <p>${character.name}</p>
-            </div>`;
-  }
-  ocultarLoader();
-};
-
-printCharacters();
 
 //card descripcion comics
 
@@ -255,16 +208,48 @@ const renderComicDetails = (detailsComic) => {
           <div id="characterList"></div>
       </div>`;
 
+    // // Obtener nombres de personajes y renderizarlos
+    // const characterList = document.getElementById("characterList");
+    // detailsComic.characters.items.forEach((character) => {
+    //   getCharacterDetails(character.name).then((characterDetails) => {
+    //     if (characterDetails) {
+    //       characterList.innerHTML += `
+    //         <div class="comic" style="display: inline-block;margin-left:20px">
+    //         <img src="${characterDetails.thumbnail.path}/portrait_xlarge.${characterDetails.thumbnail.extension}" alt="${characterDetails.title}">
+    //         <p style="font-size: 12px; word-wrap: break-word;">${characterDetails.name}</p>
+    //         </div>`;
+    //     }
+    //   });
+
+    // });
     // Obtener nombres de personajes y renderizarlos
     const characterList = document.getElementById("characterList");
     detailsComic.characters.items.forEach((character) => {
       getCharacterDetails(character.name).then((characterDetails) => {
         if (characterDetails) {
-          characterList.innerHTML += `
-            <div class="comic" style="display: inline-block;margin-left:20px">
-            <img src="${characterDetails.thumbnail.path}/portrait_xlarge.${characterDetails.thumbnail.extension}" alt="${characterDetails.title}">
-            <p style="font-size: 12px; word-wrap: break-word;">${characterDetails.name}</p>
-            </div>`;
+          const characterDiv = document.createElement("div");
+          characterDiv.classList.add("comic");
+          characterDiv.style.display = "inline-block";
+          characterDiv.style.marginLeft = "20px";
+
+          const characterImg = document.createElement("img");
+          characterImg.src = `${characterDetails.thumbnail.path}/portrait_xlarge.${characterDetails.thumbnail.extension}`;
+          characterImg.alt = characterDetails.title;
+
+          const characterName = document.createElement("p");
+          characterName.style.fontSize = "12px";
+          characterName.textContent = characterDetails.name;
+
+          characterDiv.appendChild(characterImg);
+          characterDiv.appendChild(characterName);
+
+          // Agregar evento de click al div del personaje
+          characterDiv.addEventListener("click", () => {
+            console.log("Clic en el personaje:", characterDetails);
+            renderCharacterDetails(characterDetails);
+          });
+
+          characterList.appendChild(characterDiv);
         }
       });
     });
@@ -277,6 +262,53 @@ const getCharacterDetails = async (characterName) => {
   const data = await response.json();
   return data.data.results[0];
 };
+
+// personajes
+// Variables
+let name = "";
+//data de personajes
+const getMarvelCharacters = async (name) => {
+  mostrarLoader();
+  let existName = name ? `&nameStartsWith=${name}` : "";
+  const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return {
+    characters: data.data.results,
+    totalCharacters: data.data.total,
+  };
+};
+
+//impresion de personajes en pantalla
+
+const printCharacters = async (name, order) => {
+  const { characters, totalCharacters } = await getMarvelCharacters(name);
+  if (order) {
+    characters.sort((a, b) => {
+      const aValue = a.name || "";
+      const bValue = b.name || "";
+
+      if (order === "AZ") {
+        return aValue.localeCompare(bValue);
+      } else if (order === "ZA") {
+        return bValue.localeCompare(aValue);
+      }
+    });
+  }
+  $(".characters-cards").innerHTML = ``;
+  $(".totalResults").innerHTML = `${totalCharacters}`;
+
+  for (let character of characters) {
+    $(".characters-cards").innerHTML += `
+    <div onclick="handleCharacterClick(${character.id})">
+                <img src="${character.thumbnail.path}/portrait_xlarge.${character.thumbnail.extension}" alt="${character.name}">
+                <p>${character.name}</p>
+            </div>`;
+  }
+  ocultarLoader();
+};
+
+printCharacters();
 
 //card descripcion characters
 
@@ -297,21 +329,74 @@ const cardDescriptionCharacter = async (characterId) => {
 };
 
 const renderCharacterDetails = async (detailsCharacter) => {
+  let characterDetailsContainer;
   if (charactersCardOnly) {
-    // Renderizar detalles del personaje
-    charactersCardOnly.innerHTML = `
-    <div>
-      <div style="columns: 2;margin:20px">
-        <img src="${detailsCharacter.thumbnail.path}/portrait_xlarge.${detailsCharacter.thumbnail.extension}" alt="${detailsCharacter.title}">
-        <p>${detailsCharacter.name}</p>
-        <p>${detailsCharacter.description}</p>
-      </div>
-      <div id="comicList"></div>
-    </div>`;
+    characterDetailsContainer = document.createElement("div");
+    characterDetailsContainer.innerHTML = `
+      <div>
+        <div style="columns: 2;margin:20px">
+          <img src="${detailsCharacter.thumbnail.path}/portrait_xlarge.${detailsCharacter.thumbnail.extension}" alt="${detailsCharacter.title}">
+          <p>${detailsCharacter.name}</p>
+          <p>${detailsCharacter.description}</p>
+        </div>
+        <div id="comicList"></div>
+      </div>`;
+
+    // Limpiar el contenido previo antes de agregar el nuevo contenido
+    charactersCardOnly.innerHTML = "";
+    charactersCardOnly.classList.remove("ocultoComics");
+    comicCardsOnly.classList.add("ocultoComics");
+    // Agregar el contenedor de detalles del personaje al elemento charactersCardOnly
+    charactersCardOnly.appendChild(characterDetailsContainer);
 
     // Obtener los cómics en los que aparece el personaje
     const comics = await getCharacterComics(detailsCharacter.id);
-    renderCharacterComics(comics);
+
+    // Limpiar la lista de cómics antes de agregar los nuevos cómics
+    const comicList = document.getElementById("comicList");
+    comicList.innerHTML = "";
+
+    //renderCharacterComics(comics);
+    // // Agregar evento de clic a cada cómic
+    // comics.forEach((comic) => {
+    //   const comicDiv = document.createElement('div');
+    //   comicDiv.innerHTML = `
+    //     <div>
+    //       <img src="${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}" alt="${comic.title}">
+    //       <p>${comic.title}</p>
+    //     </div>`;
+    //   comicDiv.addEventListener('click', () => {
+    //     // Aquí puedes manejar la lógica para mostrar el detalle del cómic
+    //     console.log('Clic en el cómic:', comic);
+    //     // Llamar a una función para mostrar el detalle del cómic
+    //     renderComicDetails(comic);
+    //   });
+    //   comicList.appendChild(comicDiv);
+    // });
+
+    // Agregar evento de clic a cada cómic
+    comics.forEach((comic) => {
+      const comicDiv = document.createElement("div");
+      comicDiv.classList.add("comic"); // Agrega la clase 'comic' al div del cómic
+      comicDiv.innerHTML = `
+    <div>
+      <img src="${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}" alt="${comic.title}">
+      <p>${comic.title}</p>
+    </div>`;
+
+      // Aplicar estilos al div del cómic
+      comicDiv.style.flex = "1 0 200px"; // Cada cómic ocupa un tercio del espacio disponible, con un ancho máximo de 200px
+      comicDiv.style.maxWidth = "200px";
+      comicDiv.style.cursor = "pointer";
+
+      comicDiv.addEventListener("click", () => {
+        // Aquí puedes manejar la lógica para mostrar el detalle del cómic
+        console.log("Clic en el cómic:", comic);
+        // Llamar a una función para mostrar el detalle del cómic
+        renderComicDetails(comic);
+      });
+      document.getElementById("comicList").appendChild(comicDiv);
+    });
   }
 };
 
@@ -343,7 +428,6 @@ const renderCharacterComics = (comics) => {
     comicList.innerHTML += `</div>`;
   }
 };
-
 
 // Al cargar la página
 document.addEventListener("DOMContentLoaded", () => {
@@ -384,4 +468,3 @@ buttonSearch.addEventListener("click", async (e) => {
     await printCharacters(inputText.value, selectedOrder);
   }
 });
-
