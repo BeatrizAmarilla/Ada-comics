@@ -88,7 +88,6 @@ const printComics = async (title, order, offset) => {
 };
 printComics(title, order, offset);
 
-
 // Función para actualizar los botones de paginación
 const updatePaginationButtons = () => {
   const currentPage = offset / limit + 1;
@@ -114,7 +113,7 @@ $("#paginaAnterior").addEventListener("click", () => {
 });
 
 // Event listener para el botón de siguiente página
-document.getElementById("siguientePagina").addEventListener("click", () => {
+$("#siguientePagina").addEventListener("click", () => {
   if (offset + limit < totalComics) {
     offset += limit;
     printComics(title, order, offset);
@@ -133,12 +132,6 @@ $("#paginaPrevia").addEventListener("click", () => {
   printComics(title, order, offset);
 });
 
-// // Event listener para el botón de última página
-// $("#ultimaPagina").addEventListener("click", () => {
-//   const totalPages = Math.ceil(totalComics / limit);
-//   const lastPageOffset = (totalPages - 1) * limit;
-//   printComics(title, order, lastPageOffset);
-// });
 // Event listener para el botón de última página
 $("#ultimaPagina").addEventListener("click", async () => {
   const totalPages = Math.ceil(totalComics / limit);
@@ -149,13 +142,13 @@ $("#ultimaPagina").addEventListener("click", async () => {
   $("#paginaPrevia").disabled = false;
   $("#paginaAnterior").disabled = false;
 
-  // Deshabilitar el botón de última página si ya estamos en la última página
+  // Deshabilitar el botón de última página 
   if (offset >= lastPageOffset) {
     console.log("Deshabilitando el botón de última página");
     document.getElementById("ultimaPagina").disabled = true;
   }
 
-  // Deshabilitar el botón de página siguiente si ya estamos en la última página
+  // Deshabilitar el botón de página siguiente 
   if (offset + limit >= totalComics) {
     console.log("Deshabilitando el botón de siguiente página");
     document.getElementById("siguientePagina").disabled = true;
@@ -210,7 +203,6 @@ const renderComicDetails = (detailsComic) => {
           <div id="characterList"></div>
       </div>`;
 
-
     // Obtener nombres de personajes y renderizarlos
     const characterList = document.getElementById("characterList");
     detailsComic.characters.items.forEach((character) => {
@@ -256,10 +248,10 @@ const getCharacterDetails = async (characterName) => {
 // Variables
 let name = "";
 let currentPage = 1;
-const charactersPerPage = 20; 
+const charactersPerPage = 20;
 
 //data de personajes
-const getMarvelCharacters = async (name,offset) => {
+const getMarvelCharacters = async (name, offset) => {
   mostrarLoader();
   let existName = name ? `&nameStartsWith=${name}` : "";
   const url = `${urlBase}characters?${ts}${publicKey}${hash}${existName}&limit=${charactersPerPage}&offset=${offset}`;
@@ -273,7 +265,10 @@ const getMarvelCharacters = async (name,offset) => {
 
 const printCharacters = async (name, order, page) => {
   const offset = (page - 1) * charactersPerPage;
-  const { characters, totalCharacters } = await getMarvelCharacters(name, offset);
+  const { characters, totalCharacters } = await getMarvelCharacters(
+    name,
+    offset
+  );
   if (order) {
     characters.sort((a, b) => {
       const aValue = a.name || "";
@@ -297,12 +292,10 @@ const printCharacters = async (name, order, page) => {
             </div>`;
   }
   ocultarLoader();
-  return totalCharacters; 
+  return totalCharacters;
 };
 
 printCharacters("", "", currentPage);
-
-
 
 // Función para mostrar la primera página
 const showFirstPage = () => {
@@ -320,29 +313,33 @@ const showPreviousPage = () => {
 
 // Función para mostrar la siguiente página
 const showNextPage = async () => {
-  const totalCharacters = await printCharacters("", "", currentPage); 
-  const totalPages = Math.ceil(totalCharacters / charactersPerPage); 
+  const totalCharacters = await printCharacters("", "", currentPage);
+  const totalPages = Math.ceil(totalCharacters / charactersPerPage);
   if (currentPage < totalPages) {
     currentPage++;
     printCharacters("", "", currentPage);
   }
 };
 
-
 // Función para mostrar la última página
 const showLastPage = async () => {
   const totalCharacters = await printCharacters("", "", 1);
-  const totalPages = Math.ceil(totalCharacters / charactersPerPage); 
-  currentPage = totalPages; 
+  const totalPages = Math.ceil(totalCharacters / charactersPerPage);
+  currentPage = totalPages;
   printCharacters("", "", currentPage);
 };
 
 // Agregar event listeners a los botones de paginación
-document.getElementById("paginaPrevia").addEventListener("click", showFirstPage);
-document.getElementById("paginaAnterior").addEventListener("click", showPreviousPage);
-document.getElementById("siguientePagina").addEventListener("click", showNextPage);
+document
+  .getElementById("paginaPrevia")
+  .addEventListener("click", showFirstPage);
+document
+  .getElementById("paginaAnterior")
+  .addEventListener("click", showPreviousPage);
+document
+  .getElementById("siguientePagina")
+  .addEventListener("click", showNextPage);
 document.getElementById("ultimaPagina").addEventListener("click", showLastPage);
-
 
 //card descripcion characters
 
@@ -388,7 +385,7 @@ const renderCharacterDetails = async (detailsCharacter) => {
     // Agregar evento de click a cada cómic
     comics.forEach((comic) => {
       const comicDiv = document.createElement("div");
-      comicDiv.classList.add("comic"); 
+      comicDiv.classList.add("comic");
       comicDiv.innerHTML = `
     <div>
       <img src="${comic.thumbnail.path}/portrait_xlarge.${comic.thumbnail.extension}" alt="${comic.title}">
